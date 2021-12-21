@@ -1,24 +1,22 @@
 const express = require('express')
+const {validateCreate,validateUpdate,validateId} = require('./validation')
 const router = express.Router()
+const {
+  getRoutes,
+  getByIdRoutes,
+  deleteRoutes,
+  postRoutes,
+  putRoutes,
+} = require('../../controllers/contacts')
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get('/', getRoutes)
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.get('/:id',validateId, getByIdRoutes)
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.post('/',validateCreate,postRoutes)
 
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.delete('/:id',validateId, deleteRoutes)
 
-router.patch('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router.put('/:id',validateUpdate,validateId,putRoutes)
 
 module.exports = router
