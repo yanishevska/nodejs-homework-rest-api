@@ -1,8 +1,12 @@
-const {listContacts} = require('../../model')
+import {listContacts} from '../../repository/contactsRepository'
+import { HttpCode } from '../../lib/constants' 
 
 const getRoutes = async (req, res, next) => {
-    const contacts = await listContacts()
-    res.status(200).json(contacts)
+    const contacts = await listContacts(req.query)
+    res.status(HttpCode.OK).json({
+        status: 'success',
+        code: HttpCode.OK,
+        data: { ...contacts }
+    })
 }
-
-module.exports = getRoutes
+export default getRoutes

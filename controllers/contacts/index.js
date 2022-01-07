@@ -1,13 +1,13 @@
-const getRoutes = require('./getRoutes')
-const getByIdRoutes= require('./getByIdRoutes')
-const deleteRoutes= require('./deleteRoutes')
-const postRoutes = require('./postRoutes')
-const putRoutes = require('./putRoutes')
+import getRoutes  from'./getRoutes'
+import getByIdRoutes from'./getByIdRoutes'
+import deleteRoutes from'./deleteRoutes'
+import postRoutes  from'./postRoutes'
+import updateRoutes from './updateRoutes'
 
-module.exports = {
+export {
     getRoutes,
     getByIdRoutes,
     deleteRoutes,
     postRoutes,
-    putRoutes,
+    updateRoutes,
 }

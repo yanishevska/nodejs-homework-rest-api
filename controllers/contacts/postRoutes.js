@@ -1,8 +1,14 @@
-const {addContact} = require('../../model')
+import {addContact} from '../../repository/contactsRepository'
+import { HttpCode } from '../../lib/constants' 
 
 const postRoutes = async (req, res, next) => {
   const newContact = await addContact(req.body)
-  res.status(201).json(newContact)
+  res.status(HttpCode.CREATED).json({
+    status: 'success',
+    code: HttpCode.OK,
+    data: { contact: newContact }
+  }
+    )
 }
 
-module.exports = postRoutes
+export default postRoutes
