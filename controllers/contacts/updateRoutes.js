@@ -1,9 +1,9 @@
-import{ removeContact }from '../../repository/contactsRepository'
+import {updateContact} from '../../repository/contactsRepository'
 import { HttpCode } from '../../lib/constants' 
-
-const deleteRoutes = async (req, res, next) => {
+ 
+const updateRoutes = async (req, res, next) => {
   const { id } = req.params
-  const contact = await removeContact(id)
+  const contact = await updateContact(id, req.body)
   if (contact) {
     return res.status(HttpCode.OK).json({
       status: 'success',
@@ -18,4 +18,4 @@ const deleteRoutes = async (req, res, next) => {
     })
 }
 
-export default deleteRoutes
+export default updateRoutes
