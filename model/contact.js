@@ -1,6 +1,6 @@
 import pkg from 'mongoose'
 
-const { Schema,model } = pkg
+const { Schema, SchemaTypes, model } = pkg
 
 
 const contactSchema = new Schema({
@@ -18,6 +18,11 @@ const contactSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    owner: {
+        type: SchemaTypes.ObjectId,
+        ref: 'user',
+        required: true,
+    },
 }, {
     versionKey: false,
     timestamps: true,
@@ -29,8 +34,8 @@ const contactSchema = new Schema({
         }
     },
     toObject: { virtuals: true },
-}
-)
+})
 
 const Contact = model('contact', contactSchema)
+
 export default Contact

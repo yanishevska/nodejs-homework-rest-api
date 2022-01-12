@@ -2,8 +2,9 @@ import{ removeContact }from '../../repository/contactsRepository'
 import { HttpCode } from '../../lib/constants' 
 
 const deleteRoutes = async (req, res, next) => {
+  const { id: userId } = req.user
   const { id } = req.params
-  const contact = await removeContact(id)
+  const contact = await removeContact(userId, id)
   if (contact) {
     return res.status(HttpCode.OK).json({
       status: 'success',
@@ -12,10 +13,10 @@ const deleteRoutes = async (req, res, next) => {
     })
   }
   res.status(HttpCode.NOT_FOUND).json({
-      status: 'error',
-      code: HttpCode.NOT_FOUND,
-      message: "Not found", 
-    })
+    status: 'error',
+    code: HttpCode.NOT_FOUND,
+    message: "Not found",
+  })
 }
 
 export default deleteRoutes
