@@ -2,8 +2,9 @@ import {getContactById} from '../../repository/contactsRepository'
 import { HttpCode } from '../../lib/constants'  
 
 const getByIdRoutes = async (req, res, next) => {
+  const { id: userId } = req.user
   const { id } = req.params
-  const contact = await getContactById(id)
+  const contact = await getContactById(userId, id)
   if (contact) {
     return res.status(HttpCode.OK).json({
       status: 'success',
@@ -12,10 +13,10 @@ const getByIdRoutes = async (req, res, next) => {
     })
   }
   res.status(HttpCode.NOT_FOUND).json({
-      status: 'error',
-      code: HttpCode.NOT_FOUND,
-      message: "Not found", 
-    })
+    status: 'error',
+    code: HttpCode.NOT_FOUND,
+    message: "Not found",
+  })
 }
 
 export default getByIdRoutes
