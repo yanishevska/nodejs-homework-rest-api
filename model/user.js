@@ -1,5 +1,7 @@
 import pkg from 'mongoose'
 import bcrypt from 'bcryptjs'
+import gravatar from 'gravatar'
+// import { string } from 'joi'
 
 const { Schema, model } = pkg
 
@@ -25,7 +27,17 @@ const userSchema = new Schema({
     token: {
         type: String,
         default: null,
-    }
+    },
+    avatar: {
+        type: String,
+        default: function () {
+            return gravatar.url(this.email, { s: '250' }, true)
+        },
+    },
+    idAvatarCloud: {
+        type: String,
+        default: null,
+    },
 }, {
     versionKey: false,
     timestamps: true,
@@ -50,7 +62,6 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.isValidPassword = async function (password) {
     return await bcrypt.compare(password, this.password)
-
 }
 
 const User = model('user', userSchema)

@@ -1,8 +1,7 @@
 import { HttpCode } from "../../lib/constants"
 import MESSAGES from "../../lib/messages/messages"
-import AuthService from "../../service/auth/userAuth"
+import authService from "../../service/auth/userAuth"
 
-const authService = new AuthService()
 const getCurrentUser = async (req, res, next) => {
     const id = req.user.id
     const user = await authService.getCurrentUser(id)
