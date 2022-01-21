@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-import usersRepository from '../../repository/usersRepository/createUser'
+// import usersRepository from '../../repository/usersRepository/createUser'
+import { findById } from '../../repository/usersRepository'
 import { HttpCode } from '../../lib/constants' 
 import MESSAGES from '../../lib/messages/messages'
 const SECRET_KEY = process.env.JWT_SECRET_KEY
@@ -27,7 +28,7 @@ const guard = async (req, res, next) => {
     }
 
     const payload = jwt.decode(token)
-    const user = await usersRepository.findById(payload.id)
+    const user = await findById(payload.id)
     if (!user || user.token !== token) {
         return res
             .status(HttpCode.UNAUTHORIZED)

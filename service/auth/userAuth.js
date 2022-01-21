@@ -15,10 +15,11 @@ class AuthService{
     }
 
      async create(body) {
-        const {email, subscription} = await createUser(body)
+        const {email, subscription, avatar} = await createUser(body)
         return {
             email,
             subscription,
+            avatar,
         }
     }
     
@@ -48,4 +49,4 @@ class AuthService{
     }
 }
 
-export default AuthService
+export default new AuthService()
