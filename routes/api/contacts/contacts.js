@@ -14,21 +14,21 @@ import {
   postRoutes,
   updateRoutes,
 } from '../../../controllers/contacts'
-
+import wrapperError from '../../../middleware/error/error-handler'
 import guard from '../../../middleware/guard/guard'
 
 const router = new Router()
 
-router.get('/', [guard, validateQuery], getRoutes)
+router.get('/', [guard, validateQuery], wrapperError(getRoutes))
 
-router.get('/:id',[guard, validateId], getByIdRoutes)
+router.get('/:id',[guard, validateId], wrapperError(getByIdRoutes))
 
-router.post('/',[guard, validateCreate], postRoutes)
+router.post('/',[guard, validateCreate], wrapperError(postRoutes))
 
-router.delete('/:id',[guard, validateId], deleteRoutes)
+router.delete('/:id',[guard, validateId], wrapperError(deleteRoutes))
 
-router.put('/:id',[guard, validateId, validateUpdate], updateRoutes)
+router.put('/:id',[guard, validateId, validateUpdate], wrapperError(updateRoutes))
 
-router.patch('/:id/favorite',[guard, validateId, validateUpdateFavorite], updateRoutes)
+router.patch('/:id/favorite',[guard, validateId, validateUpdateFavorite], wrapperError(updateRoutes))
 
 export default router

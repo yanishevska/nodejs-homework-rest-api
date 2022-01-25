@@ -5,5 +5,5 @@ import UploadStorage from "./uploadStorage"
 export {
     LocalStorage,
     CloudStorage,
-   UploadStorage,
+    UploadStorage,
 }

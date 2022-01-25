@@ -1,19 +1,13 @@
 import { HttpCode } from '../../lib/constants' 
 import MESSAGES from '../../lib/messages/messages'
 import authService from '../../service/auth/userAuth'
+import { CustomError } from '../../lib/errors'
 
 const login = async (req, res, next) => {
-    try {
         const { email, password } = req.body
         const user = await authService.getUser(email, password)
-        if (!user) {
-            return res
-                .status(HttpCode.UNAUTHORIZED)
-                .json({
-                    status: 'error',
-                    code: HttpCode.UNAUTHORIZED,
-                    message: MESSAGES.INVALID_LOG,
-                })
+    if (!user) {
+           throw new CustomError(HttpCode.UNAUTHORIZED, MESSAGES.INVALID_LOG)  
         }
         const token = authService.getToken(user)
         await authService.setToken(user.id, token)
@@ -24,9 +18,6 @@ const login = async (req, res, next) => {
                 code: HttpCode.OK,
                 data: { token },
             })
-    } catch (error) {
-        next(error)
-    }
    
 }
 
