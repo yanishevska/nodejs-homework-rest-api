@@ -10,8 +10,6 @@ cloudinary.config({
     api_secret: process.env.API_SECRET,
     secure: true
 })
-
-
 class CloudStorage{
     constructor(file, user) {
         this.userId = user.id  

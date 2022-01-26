@@ -11,6 +11,7 @@ const uploadAvatar = async (req, res, next) => {
         LocalStorage,
         req.file,
         req.user)
+    
     const avatarUrl = await uploadService.updateAvatar()
     res
         .status(HttpCode.OK)
@@ -21,5 +22,7 @@ const uploadAvatar = async (req, res, next) => {
             data: { avatarUrl }
         })
 }
+
+
 
 export default uploadAvatar

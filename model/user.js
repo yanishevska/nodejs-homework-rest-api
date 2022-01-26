@@ -1,7 +1,7 @@
 import pkg from 'mongoose'
+import {randomUUID} from 'crypto'
 import bcrypt from 'bcryptjs'
 import gravatar from 'gravatar'
-// import { string } from 'joi'
 
 const { Schema, model } = pkg
 
@@ -38,18 +38,28 @@ const userSchema = new Schema({
         type: String,
         default: null,
     },
-}, {
-    versionKey: false,
-    timestamps: true,
-    toJSON: {
-        virtuals: true,
-        transform: function (doc, ret) {
-            delete ret._id
-            return ret
-        }
+    verify: {
+        type: Boolean,
+        default: false,
     },
-    toObject: { virtuals: true },
-}
+   verificationToken: {
+       type: String,
+       default: randomUUID(),
+       required: [true, 'Verify token is required'],
+    },
+},
+    {
+        versionKey: false,
+        timestamps: true,
+        toJSON: {
+            virtuals: true,
+            transform: function (doc, ret) {
+                delete ret._id
+                return ret
+            }
+        },
+        toObject: { virtuals: true },
+    },
 )
 
 userSchema.pre('save', async function (next) {

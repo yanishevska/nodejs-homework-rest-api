@@ -15,27 +15,28 @@ class AuthService{
     }
 
      async create(body) {
-        const {email, subscription, avatar} = await createUser(body)
+        const {email, subscription, avatar, verificationToken} = await createUser(body)
         return {
             email,
             subscription,
             avatar,
+            verificationToken,
         }
     }
     
     async getUser(email, password) {
         const user = await findByEmail(email)
         const isValidPassword = await user?.isValidPassword(password)
-        if (!isValidPassword) {
+        if (!isValidPassword || !user?.verify) {
             return null
         }
         return user
     }
 
     getToken(user) {
-        const {id,email} = user
-        const payload = { id,email }
-        const token = jwt.sign(payload, SECRET_KEY, {expiresIn: '1y'})
+        const { id, email } = user
+        const payload = { id, email }
+        const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1y' })
         return token
     }
   
@@ -45,7 +46,7 @@ class AuthService{
 
     async getCurrentUser(userId) {
         const { email, subscription } = await findById(userId)
-        return {email,subscription}
+        return { email, subscription }
     }
 }
 
